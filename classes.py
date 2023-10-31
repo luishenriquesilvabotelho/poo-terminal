@@ -56,6 +56,7 @@ class Aluno(Usuario):
     def Cadastrar(self):
         super().Cadastrar("Aluno", self.turma)
 
+
     def ExibirAlunos(self):
         print('a')
 
