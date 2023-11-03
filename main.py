@@ -36,10 +36,11 @@ if login_ou_cadastro == 1: #LOGIN
         input_mat_login_prof = int(input('Matricula: '))
         input_senha_login_prof = input('Senha: ')
         login(input_mat_login_prof, input_senha_login_prof, aluno_ou_prof)
-    
+
 elif login_ou_cadastro == 2: #CADASTRO
     aluno_ou_prof = int(input('[1] - Aluno\n[2] - Professor'))
     if aluno_ou_prof == 1:
+        limpar_terminal()
         print("Bem vindo(a)")
         nome_aluno = input("Digite seu nome: ")
         sexo_aluno = input("Digite seu sexo: ")
@@ -48,6 +49,7 @@ elif login_ou_cadastro == 2: #CADASTRO
         turma_aluno = input("Digite sua turma: ")
         cadastrar_aluno(nome_aluno, sexo_aluno, matricula_aluno, senha_aluno, turma_aluno)
     else:
+        limpar_terminal()
         print("Bem vindo(a)")
         nome_prof = input("Digite seu nome: ")
         sexo_prof = input("Digite seu sexo: ")

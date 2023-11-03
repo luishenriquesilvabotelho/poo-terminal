@@ -10,15 +10,15 @@ class Usuario:
         self.matricula = matricula
         self.senha = senha
 
-    def Cadastrar(self, a, b):
+    def Cadastrar(self, usuario, turma):
         with sqlite3.connect("banco_de_dados.db") as banco:
             cursor = banco.cursor()
-            if a == "Aluno":
+            if usuario == "Aluno":
                 cursor.execute("INSERT INTO Aluno VALUES (?, ?, ?, ?, ?)", (
-                    self.nome, self.matricula, self.senha, self.sexo, b))
+                    self.nome, self.matricula, self.senha, self.sexo, turma))
                 banco.commit()
 
-            elif a == "Professor":
+            elif usuario == "Professor":
                 cursor.execute("INSERT INTO Professor (nome, matricula, senha, sexo) VALUES (?, ?, ?, ?)",
                             (self.nome, self.matricula, self.senha, self.sexo))
                 banco.commit()
@@ -26,12 +26,12 @@ class Usuario:
     def Login(self, usuario):
         with sqlite3.connect("banco_de_dados.db") as banco:
             cursor = banco.cursor()
-            if usuario == 'Aluno':
+            if usuario == 1:
                 cursor.execute(
                 "SELECT * FROM Aluno WHERE (matricula == ? AND senha == ?)", (self.matricula, self.senha))
                 verificador = cursor.fetchall()
                 if len(verificador) > 0:
-                    print("Login feito com sucesso!")
+                    print("Aluno Logado com sucessp")
                     return True
                 else:
                     print("Alguma coisa estava incorreta!")
@@ -41,7 +41,7 @@ class Usuario:
                 "SELECT * FROM Professor WHERE (matricula == ? AND senha == ?)", (self.matricula, self.senha))
                 verificador = cursor.fetchall()
                 if len(verificador) > 0:
-                    print("Login feito com sucesso!")
+                    print("Prof Logado com sucessor")
                     return True
                 else:
                     print("Alguma coisa estava incorreta!")
