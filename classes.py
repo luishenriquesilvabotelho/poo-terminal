@@ -94,17 +94,21 @@ class Professor(Usuario):
         cursor = banco.cursor()
         cursor.execute("SELECT nome, turma, sexo, matricula FROM Aluno")
         mostrar_alunos = cursor.fetchall()
-        for mostrar_alunos in mostrar_alunos:
-            nome = mostrar_alunos[0]
-            turma = mostrar_alunos[1]
-            sexo = mostrar_alunos[2]
-            matricula = mostrar_alunos[3]
-            print("Nome: ",nome)
-            print("Turma: ", turma)
-            print("Sexo: ", sexo)
-            print("Matricula: ", matricula)
-            print()
-            banco.close()
+        if mostrar_alunos:
+            for alunos in mostrar_alunos:
+                nome = alunos[0]
+                turma = alunos[1]
+                sexo = alunos[2]
+                matricula = alunos[3]
+                print("Nome: ",nome)
+                print("Turma: ", turma)
+                print("Sexo: ", sexo)
+                print("Matricula: ", matricula)
+                print()
+                
+        else:
+            print(f"Nenhuma aluno encontrado na turma {turma}")
+        banco.close()
 
     def EditarInscricoes(self):
         print("Editando inscrições")
