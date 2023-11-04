@@ -38,13 +38,24 @@ if login_ou_cadastro == 1:  # LOGIN
                 pass
             
         else:
-        print("Matrícula ou senha incorretas. Tente novamente.")
+            print("Matrícula ou senha incorretas. Tente novamente.")
 
     if aluno_ou_prof == 2:  # LOGIN -> PROFESSOR
         limpar_terminal()
         print('Insira seus dados')
         input_mat_login_prof = int(input('Matrícula: '))
         input_senha_login_prof = input('Senha: ')
+        usuario2 = Professor(None,None, input_mat_login_prof, input_senha_login_prof)
+        if usuario2.Login(aluno_ou_prof):
+            limpar_terminal()
+            print('========Menu do Aluno===========')
+            print("[1]-Ver Alunos escritos\n[2]-Sla")
+            Exibir_Alunos= int(input("Escolha uma das opções acima: "))
+            if Exibir_Alunos == 1:
+                print("Alunos cadastradoS no sistema ")
+                usuario2.ExibirAlunos()
+            else:
+                quit()
 
 elif login_ou_cadastro == 2:  # CADASTRO
     aluno_ou_prof = int(input('[1] - Aluno\n[2] - Professor'))

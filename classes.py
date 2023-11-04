@@ -36,16 +36,17 @@ class Usuario:
                 else:
                     print("Matrícula ou senha incorretas!")
                     return False
-            elif usuario == 2 :
+            elif usuario == 2:
                 cursor.execute("SELECT * FROM Professor WHERE matricula = ? AND senha = ?",
-                            (self.matricula, self.senha))
-                verificador = cursor.fetchall()
-                if len(verificador) > 0:
-                    print("Professor logado com sucesso")
+                                (self.matricula, self.senha))
+                verificador2 = cursor.fetchall()
+                if len(verificador2) > 0:
+                    print("Professor logado com sucesso!")
                     return True
                 else:
                     print("Matrícula ou senha incorretas!")
                     return False
+                
 
 
 class Aluno(Usuario):
@@ -56,6 +57,8 @@ class Aluno(Usuario):
         
     def Cadastrar(self):
         super().Cadastrar("Aluno", self.turma)
+
+
 
     def VerificarSenha(self, senha):
         return self.senha == senha
@@ -85,6 +88,23 @@ class Professor(Usuario):
 
     def Cadastrar(self):
         return super().Cadastrar("Professor")
+    
+    def ExibirAlunos(self):
+        banco = sqlite3.connect("banco_de_dados.db")
+        cursor = banco.cursor()
+        cursor.execute("SELECT nome, turma, sexo, matricula FROM Aluno")
+        mostrar_alunos = cursor.fetchall()
+        for mostrar_alunos in mostrar_alunos:
+            nome = mostrar_alunos[0]
+            turma = mostrar_alunos[1]
+            sexo = mostrar_alunos[2]
+            matricula = mostrar_alunos[3]
+            print("Nome: ",nome)
+            print("Turma: ", turma)
+            print("Sexo: ", sexo)
+            print("Matricula: ", matricula)
+            print()
+            banco.close()
 
     def EditarInscricoes(self):
         print("Editando inscrições")
