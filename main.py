@@ -38,7 +38,7 @@ if login_ou_cadastro == 1:  # LOGIN
                 pass
             
         else:
-         print("Matrícula ou senha incorretas. Tente novamente.")
+        print("Matrícula ou senha incorretas. Tente novamente.")
 
     if aluno_ou_prof == 2:  # LOGIN -> PROFESSOR
         limpar_terminal()
