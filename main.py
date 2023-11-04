@@ -26,14 +26,25 @@ if login_ou_cadastro == 1:  # LOGIN
         print('Insira seus dados')
         input_mat_login_aluno = int(input('Matrícula: '))
         input_senha_login_aluno = input('Senha: ')
-        login(input_mat_login_aluno, input_senha_login_aluno, aluno_ou_prof)
+        usuario  = Usuario(None, None, input_mat_login_aluno, input_senha_login_aluno)
+        if usuario.Login(aluno_ou_prof):
+            limpar_terminal()
+            print('========Menu do Aluno===========')
+            print('[1] - Editar seus dados\n[2] - Esqueceu sua senha?')
+            menu_aluno_escolha = int(input('Escolha uma das opções acima: '))
+            if menu_aluno_escolha == 1:
+                pass
+            elif menu_aluno_escolha == 2:
+                pass
+            
+        else:
+         print("Matrícula ou senha incorretas. Tente novamente.")
 
     if aluno_ou_prof == 2:  # LOGIN -> PROFESSOR
         limpar_terminal()
         print('Insira seus dados')
         input_mat_login_prof = int(input('Matrícula: '))
         input_senha_login_prof = input('Senha: ')
-        login(input_mat_login_prof, input_senha_login_prof, aluno_ou_prof)
 
 elif login_ou_cadastro == 2:  # CADASTRO
     aluno_ou_prof = int(input('[1] - Aluno\n[2] - Professor'))
@@ -79,8 +90,8 @@ elif login_ou_cadastro == 2:  # CADASTRO
         num_turma_aluno = int(input("Escolha o número da turma desejada: "))
         if num_turma_aluno in turmas:
             turma_aluno = turmas[num_turma_aluno]
-            cadastrar_aluno(nome_aluno, sexo_aluno, matricula_aluno, senha_aluno, turma_aluno)
-        else:
+            aluno = Aluno(nome_aluno, sexo_aluno, matricula_aluno, sexo_aluno, turma_aluno)
+            aluno.Cadastrar()        
             print("Turma não encontrada. O aluno não foi cadastrado.")
         
     else:
@@ -90,4 +101,5 @@ elif login_ou_cadastro == 2:  # CADASTRO
         sexo_prof = input("Digite seu sexo: ")
         matricula_prof = int(input("Digite sua matrícula: "))
         senha_prof = input("Digite sua senha: ")
-        cadastrar_professor(nome_prof, sexo_prof, matricula_prof, senha_prof)
+        professor = Professor(nome_prof, sexo_prof, matricula_prof, senha_prof)
+        professor.Cadastrar()
