@@ -49,13 +49,39 @@ class Usuario:
 
 
 class Aluno(Usuario):
-    def __init__(self, nome, sexo, matricula, senha, turma):
+    turmas = {
+        1: '1 INFO A',
+        2: '1 INFO B',
+        3: '1 ELET A',
+        4: '1 ELET B',
+        5: '1 EDIF A',
+        6: '1 EDIF B',
+        7: '1 QUIM A',
+        8: '1 QUIM B',
+        9: ' 2 INFO M',
+        10: '2 INFO V',
+        11: '2 ELET M',
+        12: '2 ELET V',
+        13: '2 EDIF M',
+        14: '2 EDIF V',
+        15: '2 QUIM M',
+        16: '2 QUIM V',
+        17: '3 INFO M',
+        18: '3 INFO V',
+        19: '3 ELET M',
+        20: '3 ELET V',
+        21: '3 EDIF M',
+        22: '3 EDIF V',
+        23: '3 QUIM M',
+        24: '3 QUIM V',
+    }
+    def __init__(self, nome, sexo, matricula, senha, num_turma):
         super().__init__(nome, sexo, matricula, senha)
-        self.turma = turma
+        self.num_turma = num_turma
 
     def Cadastrar(self):
-        super().Cadastrar("Aluno", self.turma)
-
+        turma = Aluno.turmas.get(self.num_turma,f'Turma {self.num_turma} não encontrada')
+        super().Cadastrar("Aluno", self.num_turma)
 
     def ExibirAlunos(self):
         print('a')
