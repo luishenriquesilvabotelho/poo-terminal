@@ -22,6 +22,8 @@ class Usuario:
                             (self.nome, self.matricula, self.senha, self.sexo))
                 banco.commit()
                 print("Professor cadastrado com sucesso")
+            else:
+                raise ValueError("Tipo de usuário invalido ao cadastrar")
 
     def Login(self, usuario):
         with sqlite3.connect("banco_de_dados.db") as banco:
@@ -92,24 +94,44 @@ class Professor(Usuario):
     def ExibirAlunos(self):
         banco = sqlite3.connect("banco_de_dados.db")
         cursor = banco.cursor()
-        cursor.execute("SELECT nome, turma, sexo, matricula FROM Aluno")
+        try:
+            cursor.execute("SELECT nome, turma, sexo, matricula FROM Aluno")
+        except sqlite3.OperationalError:
+            print("Erro: Tabela Alunos não encontrada.")
+            return
         mostrar_alunos = cursor.fetchall()
+        alunos_por_turmas = {
+        }
         if mostrar_alunos:
             for alunos in mostrar_alunos:
                 nome = alunos[0]
                 turma = alunos[1]
                 sexo = alunos[2]
                 matricula = alunos[3]
-                print("Nome: ",nome)
-                print("Turma: ", turma)
-                print("Sexo: ", sexo)
-                print("Matricula: ", matricula)
-                print()
+                if turma in alunos_por_turmas:
+                    alunos_por_turmas[turma].append({
+                        "Nome": nome,
+                        "Sexo": sexo,
+                        "Matricula": matricula
+                    })
+                else:
+                    alunos_por_turmas[turma]= [{
+                        "Nome": nome,
+                        "Sexo": sexo,
+                        "Matricula": matricula
+                    }]
+            for turma, alunos in alunos_por_turmas.items():
+                print(f"Turma: {turma}")
+                for aluno in alunos:
+                    print(f"Nome: {aluno['Nome']}")
+                    print(f"Sexo: {aluno['Sexo']}")
+                    print(f"Matricula: {aluno['Matricula']}")
+                    print()
                 
         else:
             print(f"Nenhuma aluno encontrado na turma {turma}")
         banco.close()
 
-    def EditarInscricoes(self):
+def EditarInscricoes(self):
         print("Editando inscrições")
 

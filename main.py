@@ -103,8 +103,9 @@ elif login_ou_cadastro == 2:  # CADASTRO
             turma_aluno = turmas[num_turma_aluno]
             aluno = Aluno(nome_aluno, sexo_aluno, matricula_aluno, sexo_aluno, turma_aluno)
             aluno.Cadastrar()        
-            print("Turma não encontrada. O aluno não foi cadastrado.")
-        
+        else:
+            print("Turma não encontrada!")
+    
     else:
         limpar_terminal()
         print("Bem-vindo(a)")
