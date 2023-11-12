@@ -136,48 +136,46 @@ def EditarInscricoes(self):
         print("Editando inscrições")
 
 
-# class Chave:
-#     def __init__(self, turmas):
-#         self.turmas = turmas
-#         self.chaveamento = []
+class Chave:
+    def __init__(self, turmas):
+        self.turmas = turmas
+        self.chaveamento = []
 
-#     def OrganizarTimes(self):
-#         # Criar um dicionário para armazenar os times por turma
-#         times_por_turma = {}
-#         for turma in self.turmas:
-#             times_por_turma[turma] = []
+    def OrganizarTimes(self):
+        # Criar um dicionário para armazenar os times por turma
+        times_por_turma = {}
+        for turma in self.turmas:
+            times_por_turma[turma] = []
 
-#         # Consultar o banco de dados para obter os alunos por turma
-#         with sqlite3.connect("banco_de_dados.db") as banco:
-#             cursor = banco.cursor()
-#             cursor.execute("SELECT nome, turma FROM Aluno")
-#             alunos = cursor.fetchall()
+        # Consultar o banco de dados para obter os alunos por turma
+        with sqlite3.connect("banco_de_dados.db") as banco:
+            cursor = banco.cursor()
+            cursor.execute("SELECT nome, turma FROM Aluno")
+            alunos = cursor.fetchall()
             
-#             for aluno in alunos:
-#                 nome, turma = aluno
-#                 times_por_turma[turma].append(nome)
+            for aluno in alunos:
+                nome, turma = aluno
+                times_por_turma[turma].append(nome)
 
-#         # Exibir os times organizados por turma
-#         for turma, times in times_por_turma.items():
-#             print(f"Turma: {turma}")
-#             for time in times:
-#                 print(f"  - {time}")
-#             print()
+        # Exibir os times organizados por turma
+        for turma, times in times_por_turma.items():
+            print(f"Turma: {turma}")
+            for time in times:
+                print(f"  - {time}")
+            print()
 
-#     def GerarChave(self):
-#         # Embaralhar aleatoriamente as turmas para criar o chaveamento
-#         random.shuffle(self.turmas)
+    def GerarChave(self):
+        # Embaralhar aleatoriamente as turmas para criar o chaveamento
+        random.shuffle(self.turmas)
 
-#         # Criar as disputas em pares
-#         for i in range(0, len(self.turmas), 2):
-#             if i + 1 < len(self.turmas):
-#                 disputa = (self.turmas[i], self.turmas[i + 1])
-#                 self.chaveamento.append(disputa)
+        # Criar as disputas em pares
+        for i in range(0, len(self.turmas), 2):
+            if i + 1 < len(self.turmas):
+                disputa = (self.turmas[i], self.turmas[i + 1])
+                self.chaveamento.append(disputa)
 
-#     def ExibirChave(self):
-#         # Exibir o chaveamento
-#         for i, disputa in enumerate(self.chaveamento, start=1):
-#             turma1, turma2 = disputa
-#             print(f"Disputa {i}: {turma1} x {turma2}")
-
-#Sem resultados tbm
+    def ExibirChave(self):
+        # Exibir o chaveamento
+        for i, disputa in enumerate(self.chaveamento, start=1):
+            turma1, turma2 = disputa
+            print(f"Disputa {i}: {turma1} x {turma2}")

@@ -54,43 +54,50 @@ if login_ou_cadastro == 1:  # LOGIN
             if escolha_prof == 1:
                 print("Alunos cadastradoS no sistema ")
                 usuario2.ExibirAlunos()
-#             elif escolha_prof == 2:
-#                 limpar_terminal()
-#             print('======== Interagir com Chave =========')
-            
-#             # Criar uma instância de Chave
-#             turmas_exemplo = []
-#             chave_interacao = Chave(turmas_exemplo)
+            elif escolha_prof == 2:
+                limpar_terminal()
+                print('======== Interagir com Chave =========')
+                
+                # Consultar o banco de dados para obter as turmas cadastradas
+                with sqlite3.connect("banco_de_dados.db") as banco:
+                    cursor = banco.cursor()
+                    cursor.execute("SELECT DISTINCT turma FROM Aluno")
+                    turmas_cadastradas = [turma[0] for turma in cursor.fetchall()]
 
-#             # Opções para interagir com a Chave
-#             while True:
-#                 print('[1] - Organizar Times')
-#                 print('[2] - Gerar Chave')
-#                 print('[3] - Exibir Chave')
-#                 print('[0] - Sair')
+                # Criar uma instância de Chave com as turmas cadastradas
+                chave_interacao = Chave(turmas_cadastradas)
 
-#                 opcao_chave = int(input('Escolha uma opção: '))
+                # Opções para interagir com a Chave
+                while True:
+                    print('[1] - Organizar Times')
+                    print('[2] - Gerar Chave')
+                    print('[3] - Exibir Chave')
+                    print('[0] - Sair')
 
-#                 if opcao_chave == 1:
-#                     limpar_terminal()
-#                     print('Organizando Times:')
-#                     chave_interacao.OrganizarTimes()
+                    opcao_chave = int(input('Escolha uma opção: '))
 
-#                 elif opcao_chave == 2:
-#                     limpar_terminal()
-#                     print('Gerando Chave:')
-#                     chave_interacao.GerarChave()
-#                     print('Chave gerada com sucesso!')
+                    if opcao_chave == 1:
+                        limpar_terminal()
+                        print('Organizando Times:')
+                        chave_interacao.OrganizarTimes()
 
-#                 elif opcao_chave == 3:
-#                     limpar_terminal()
-#                     print('Exibindo Chave:')
-#                     chave_interacao.ExibirChave()
+                    elif opcao_chave == 2:
+                        limpar_terminal()
+                        print('Gerando Chave:')
+                        chave_interacao.GerarChave()
+                        print('Chave gerada com sucesso!')
 
-#                 elif opcao_chave == 0:
-#                     break
-# #ISSO NÃO FUNCIONA 
+                    elif opcao_chave == 3:
+                        limpar_terminal()
+                        print('Exibindo Chave:')
+                        chave_interacao.ExibirChave()
 
+                    elif opcao_chave == 0:
+                        break
+
+                    else:
+                        limpar_terminal()
+                        print('Opção inválida. Tente novamente.')
         else:
             quit()
 
