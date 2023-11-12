@@ -1,6 +1,6 @@
 
 import sqlite3
-
+import random
 class Usuario:
     def __init__(self, nome, sexo, matricula, senha):
         self.nome = nome
@@ -135,3 +135,34 @@ class Professor(Usuario):
 def EditarInscricoes(self):
         print("Editando inscrições")
 
+
+class Chave:
+    def __init__(self):
+        self.times = []
+
+    def OrganizarTimes(self):
+        with sqlite3.connect("banco_de_dados.db") as banco:
+            cursor = banco.cursor()
+            cursor.execute("SELECT nome, turma FROM Aluno")
+            alunos = cursor.fetchall()
+            
+            # Criar um dicionário de times por turma
+            times_por_turma = {}
+            for aluno in alunos:
+                nome, turma = aluno
+                if turma not in times_por_turma:
+                    times_por_turma[turma] = []
+                times_por_turma[turma].append(nome)
+
+            # Adicionar times à lista
+            for turma, jogadores in times_por_turma.items():
+                self.times.append({
+                    'turma': turma,
+                    'jogadores': jogadores
+                })
+
+    def GerarChave(self):
+        random.shuffle(self.times)
+
+    def ExibirChave(self):
+        

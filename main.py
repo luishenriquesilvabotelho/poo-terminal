@@ -49,11 +49,27 @@ if login_ou_cadastro == 1:  # LOGIN
         if usuario2.Login(aluno_ou_prof):
             limpar_terminal()
             print('========Menu do Aluno===========')
-            print("[1]-Ver Alunos escritos\n[2]-Sla")
-            Exibir_Alunos= int(input("Escolha uma das opções acima: "))
-            if Exibir_Alunos == 1:
+            print("[1]-Ver Alunos escritos\n[2] - Organizar Chave")
+            escolha_prof = int(input("Escolha uma das opções acima: "))
+            if escolha_prof == 1:
                 print("Alunos cadastradoS no sistema ")
                 usuario2.ExibirAlunos()
+            elif escolha_prof == 2:
+                print("Organizando Chave...")
+                
+                # Criar uma instância da classe Chave
+                chaveamento = Chave()
+
+                # Organizar os times
+                chaveamento.OrganizarTimes()
+
+                # Embaralhar o chaveamento
+                chaveamento.GerarChave()
+
+                # Exibir o chaveamento
+                chaveamento.ExibirChave()
+
+                print("Chave organizada com sucesso!")
             else:
                 quit()
 
@@ -115,3 +131,4 @@ elif login_ou_cadastro == 2:  # CADASTRO
         senha_prof = input("Digite sua senha: ")
         professor = Professor(nome_prof, sexo_prof, matricula_prof, senha_prof)
         professor.Cadastrar()
+        
