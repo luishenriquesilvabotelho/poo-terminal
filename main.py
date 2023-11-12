@@ -54,24 +54,45 @@ if login_ou_cadastro == 1:  # LOGIN
             if escolha_prof == 1:
                 print("Alunos cadastradoS no sistema ")
                 usuario2.ExibirAlunos()
-            elif escolha_prof == 2:
-                print("Organizando Chave...")
-                
-                # Criar uma instância da classe Chave
-                chaveamento = Chave()
+#             elif escolha_prof == 2:
+#                 limpar_terminal()
+#             print('======== Interagir com Chave =========')
+            
+#             # Criar uma instância de Chave
+#             turmas_exemplo = []
+#             chave_interacao = Chave(turmas_exemplo)
 
-                # Organizar os times
-                chaveamento.OrganizarTimes()
+#             # Opções para interagir com a Chave
+#             while True:
+#                 print('[1] - Organizar Times')
+#                 print('[2] - Gerar Chave')
+#                 print('[3] - Exibir Chave')
+#                 print('[0] - Sair')
 
-                # Embaralhar o chaveamento
-                chaveamento.GerarChave()
+#                 opcao_chave = int(input('Escolha uma opção: '))
 
-                # Exibir o chaveamento
-                chaveamento.ExibirChave()
+#                 if opcao_chave == 1:
+#                     limpar_terminal()
+#                     print('Organizando Times:')
+#                     chave_interacao.OrganizarTimes()
 
-                print("Chave organizada com sucesso!")
-            else:
-                quit()
+#                 elif opcao_chave == 2:
+#                     limpar_terminal()
+#                     print('Gerando Chave:')
+#                     chave_interacao.GerarChave()
+#                     print('Chave gerada com sucesso!')
+
+#                 elif opcao_chave == 3:
+#                     limpar_terminal()
+#                     print('Exibindo Chave:')
+#                     chave_interacao.ExibirChave()
+
+#                 elif opcao_chave == 0:
+#                     break
+# #ISSO NÃO FUNCIONA 
+
+        else:
+            quit()
 
 elif login_ou_cadastro == 2:  # CADASTRO
     aluno_ou_prof = int(input('[1] - Aluno\n[2] - Professor'))
