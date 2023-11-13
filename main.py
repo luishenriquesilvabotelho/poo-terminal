@@ -28,17 +28,24 @@ if login_ou_cadastro == 1:  # LOGIN
         input_senha_login_aluno = input('Senha: ')
         usuario  = Usuario(None, None, input_mat_login_aluno, input_senha_login_aluno)
         if usuario.Login(aluno_ou_prof):
-            limpar_terminal()
-            print('========Menu do Aluno===========')
-            print('[1] - Editar seus dados\n[2] - Esqueceu sua senha?')
-            menu_aluno_escolha = int(input('Escolha uma das opções acima: '))
-            if menu_aluno_escolha == 1:
-                pass
-            elif menu_aluno_escolha == 2:
-                pass
-            
-        else:
-            print("Matrícula ou senha incorretas. Tente novamente.")
+            while True:  # Adicione um loop para o menu do aluno
+                limpar_terminal()
+                print('========Menu do Aluno===========')
+                print('[1] - Editar seus dados\n[2] - Esqueceu sua senha?\n[0] - Sair')
+                menu_aluno_escolha = int(input('Escolha uma das opções acima: '))
+
+                if menu_aluno_escolha == 1:
+                    aluno_verifica_mat = int(input('MAT'))
+                    aluno_verifica_senha = input('senha')
+                    aluno_mudar = Aluno(None, None, aluno_verifica_mat, aluno_verifica_senha, None)
+                    aluno_mudar.VerificarSenha()
+
+                elif menu_aluno_escolha == 2:
+                    pass
+
+                elif menu_aluno_escolha == 0:  
+                    quit()  
+
 
     if aluno_ou_prof == 2:  # LOGIN -> PROFESSOR
         limpar_terminal()
