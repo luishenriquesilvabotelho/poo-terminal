@@ -1,6 +1,6 @@
-
 import sqlite3
 import random
+
 class Usuario:
     def __init__(self, nome, sexo, matricula, senha):
         self.nome = nome
@@ -11,44 +11,48 @@ class Usuario:
     def Cadastrar(self, usuario, turma=None):
         with sqlite3.connect("banco_de_dados.db") as banco:
             cursor = banco.cursor()
-            if usuario == "Aluno":
-                cursor.execute("INSERT INTO Aluno VALUES (?, ?, ?, ?, ?)", (
-                    self.nome, self.matricula, self.senha, self.sexo, turma))
-                banco.commit()
-                print("Aluno cadastrado com sucesso")
-
-            elif usuario == "Professor":
-                cursor.execute("INSERT INTO Professor (nome, matricula, senha, sexo) VALUES (?, ?, ?, ?)",
-                            (self.nome, self.matricula, self.senha, self.sexo))
-                banco.commit()
-                print("Professor cadastrado com sucesso")
-            else:
-                raise ValueError("Tipo de usuário invalido ao cadastrar")
+            try:
+                if usuario == "Aluno":
+                    cursor.execute("INSERT INTO Aluno VALUES (?, ?, ?, ?, ?)",
+                                   (self.nome, self.matricula, self.senha, self.sexo, turma))
+                    banco.commit()
+                    print("Aluno cadastrado com sucesso")
+                elif usuario == "Professor":
+                    cursor.execute("INSERT INTO Professor (nome, matricula, senha, sexo) VALUES (?, ?, ?, ?)",
+                                   (self.nome, self.matricula, self.senha, self.sexo))
+                    banco.commit()
+                    print("Professor cadastrado com sucesso")
+                else:
+                    raise ValueError("Tipo de usuário inválido ao cadastrar")
+            except sqlite3.Error as e:
+                print(f"Erro ao cadastrar {usuario}: {e}")
 
     def Login(self, usuario):
         with sqlite3.connect("banco_de_dados.db") as banco:
             cursor = banco.cursor()
-            if usuario == 1:
-                cursor.execute("SELECT * FROM Aluno WHERE matricula = ? AND senha = ?",
-                            (self.matricula, self.senha))
-                verificador = cursor.fetchall()
-                if len(verificador) > 0:
-                    print("Aluno logado com sucesso")
-                    return True
-                else:
-                    print("Matrícula ou senha incorretas!")
-                    return False
-            elif usuario == 2:
-                cursor.execute("SELECT * FROM Professor WHERE matricula = ? AND senha = ?",
-                                (self.matricula, self.senha))
-                verificador2 = cursor.fetchall()
-                if len(verificador2) > 0:
-                    print("Professor logado com sucesso!")
-                    return True
-                else:
-                    print("Matrícula ou senha incorretas!")
-                    return False
-                
+            try:
+                if usuario == 1:
+                    cursor.execute("SELECT * FROM Aluno WHERE matricula = ? AND senha = ?",
+                                   (self.matricula, self.senha))
+                    verificador = cursor.fetchall()
+                    if len(verificador) > 0:
+                        print("Aluno logado com sucesso")
+                        return True
+                    else:
+                        print("Matrícula ou senha incorretas!")
+                        return False
+                elif usuario == 2:
+                    cursor.execute("SELECT * FROM Professor WHERE matricula = ? AND senha = ?",
+                                   (self.matricula, self.senha))
+                    verificador2 = cursor.fetchall()
+                    if len(verificador2) > 0:
+                        print("Professor logado com sucesso!")
+                        return True
+                    else:
+                        print("Matrícula ou senha incorretas!")
+                        return False
+            except sqlite3.Error as e:
+                print(f"Erro ao realizar login: {e}")
 
 
 class Aluno(Usuario):
