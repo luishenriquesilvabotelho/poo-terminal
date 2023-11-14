@@ -73,7 +73,7 @@ if login_ou_cadastro == 1:  # LOGIN
 
                 # Criar uma instância de Chave com as turmas cadastradas
                 chave_interacao = Chave(turmas_cadastradas)
-
+            
                 # Opções para interagir com a Chave
                 while True:
                     print('[1] - Organizar Times')
@@ -98,17 +98,19 @@ if login_ou_cadastro == 1:  # LOGIN
                         limpar_terminal()
                         print('Exibindo Chave:')
                         chave_interacao.ExibirChave()
-
+    
                     elif opcao_chave == 0:
                         break
 
                     else:
                         limpar_terminal()
                         print('Opção inválida. Tente novamente.')
+                
         else:
             quit()
-            
-
+        
+        
+        
 elif login_ou_cadastro == 2:  # CADASTRO
     aluno_ou_prof = int(input('[1] - Aluno\n[2] - Professor'))
     if aluno_ou_prof == 1:
@@ -129,7 +131,7 @@ elif login_ou_cadastro == 2:  # CADASTRO
             6: '1 EDIF B',
             7: '1 QUIM A',
             8: '1 QUIM B',
-            9: ' 2 INFO M',
+            9: '2 INFO M',
             10: '2 INFO V',
             11: '2 ELET M',
             12: '2 ELET V',

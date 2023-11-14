@@ -159,6 +159,11 @@ class Chave:
         self.turmas = turmas
         self.chaveamento = []
 
+    class Chave:
+        def __init__(self, turmas):
+            self.turmas = turmas
+            self.chaveamento = []
+
     def OrganizarTimes(self):
         # Criar um dicionário para armazenar os times por turma
         times_por_turma = {}
