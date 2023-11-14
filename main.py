@@ -6,21 +6,21 @@ try:
     limpar_terminal()
     print('Seja bem-vindo ao nosso sistema\nEscolha uma das opções abaixo')
 
-    login_ou_cadastro = int(input('[1] - Login\n[2] - Cadastro\n'))
+    login_ou_cadastro = int(input('[1] - Login\n[2] - Cadastro\nR: '))
     limpar_terminal()
     while login_ou_cadastro != 1 and login_ou_cadastro != 2:
         limpar_terminal()
         print('Você digitou algo incorretamente')
-        login_ou_cadastro = int(input('[1] - Login\n[2] - Cadastro\n'))
+        login_ou_cadastro = int(input('[1] - Login\n[2] - Cadastro\nR: '))
 
     if login_ou_cadastro == 1:  # LOGIN
         print('Você irá Logar como?')
-        aluno_ou_prof = int(input('[1] - Aluno\n[2] - Professor\n'))
+        aluno_ou_prof = int(input('[1] - Aluno\n[2] - Professor\nR: '))
 
         while aluno_ou_prof != 1 and aluno_ou_prof != 2:
             limpar_terminal()
             print('Você digitou algo incorretamente')
-            aluno_ou_prof = int(input('[1] - Aluno\n[2] - Professor'))
+            aluno_ou_prof = int(input('[1] - Aluno\n[2] - Professor\nR: '))
 
         if aluno_ou_prof == 1:  # LOGIN -> ALUNO
             limpar_terminal()
@@ -82,6 +82,7 @@ try:
                             print('[1] - Organizar Times')
                             print('[2] - Gerar Chave')
                             print('[3] - Exibir Chave')
+                            print("[4] - Exibir Partida ")
                             print('[0] - Sair')
 
                             opcao_chave = int(input('Escolha uma opção: '))
@@ -101,6 +102,17 @@ try:
                                 limpar_terminal()
                                 print('Exibindo Chave:')
                                 chave_interacao.ExibirChave()
+                                
+                            elif opcao_chave == 4:
+                                limpar_terminal()
+                                if not chave_interacao.chaveamento:
+                                    print("Chave ainda não gerada. Por favor, gere a chave primeiro.")
+                                else:
+                                    partida_interacao = Partida(chave_interacao.chaveamento)
+                                    partida_interacao.obter_horario_partida()
+                                    limpar_terminal()
+                                    print("======== Partida ========")
+                                    partida_interacao.exibir_partida()
 
                             elif opcao_chave == 0:
                                 break

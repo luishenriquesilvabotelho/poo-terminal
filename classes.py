@@ -195,6 +195,29 @@ class Chave:
         # Exibir o chaveamento
         for i, disputa in enumerate(self.chaveamento, start=1):
             print(f"Disputa {i}: {' x '.join(disputa)}")
+class Partida:
+    def __init__(self, chaveamento):
+        self.chaveamento = chaveamento
+        self.horario = {}
+    def obter_horario_partida(self):
+        for i, disputa in enumerate(self.chaveamento, start= 1):
+            horario = input(f"Digite o horário da partida {i} entre {disputa[0]} x {disputa[1]} (por exemplo, 15:00)\nR: ")
+            self.horario[i] = horario
+    def exibir_partida(self):
+        for i, disputa in enumerate(self.chaveamento, start= 1):
+            turma1, turma2 = disputa
+            print(f"Disputa {i}: {turma1} x {turma2}")
+            if i in self.horario:
+                print(f"Horário da Partida: {self.horario[i]}")
+            else:
+                print("Horário da Partida: Não definido")
+            print("Times")
+            for time in self.chaveamento:
+                print(f" - {time[0]} vs {time[1]}")
+
+      
+
+
 class Boletim:
     def __init__(self, Horario, Placar, Local):
         self.Horario = Horario
