@@ -153,6 +153,7 @@ class Professor(Usuario):
 
 
 
+
 class Chave:
     def __init__(self, turmas):
         self.turmas = turmas
@@ -169,7 +170,7 @@ class Chave:
             cursor = banco.cursor()
             cursor.execute("SELECT nome, turma FROM Aluno")
             alunos = cursor.fetchall()
-            
+
             for aluno in alunos:
                 nome, turma = aluno
                 times_por_turma[turma].append(nome)
@@ -181,21 +182,19 @@ class Chave:
                 print(f"  - {time}")
             print()
 
-    def GerarChave(self):
+    def GerarChave(self, times_por_disputa=2):
         # Embaralhar aleatoriamente as turmas para criar o chaveamento
         random.shuffle(self.turmas)
 
-        # Criar as disputas em pares
-        for i in range(0, len(self.turmas), 2):
-            if i + 1 < len(self.turmas):
-                disputa = (self.turmas[i], self.turmas[i + 1])
-                self.chaveamento.append(disputa)
+        # Criar as disputas com o número desejado de times por disputa
+        for i in range(0, len(self.turmas), times_por_disputa):
+            disputa = tuple(self.turmas[i:i+times_por_disputa])
+            self.chaveamento.append(disputa)
 
     def ExibirChave(self):
         # Exibir o chaveamento
         for i, disputa in enumerate(self.chaveamento, start=1):
-            turma1, turma2 = disputa
-            print(f"Disputa {i}: {turma1} x {turma2}")
+            print(f"Disputa {i}: {' x '.join(disputa)}")
 class Boletim:
     def __init__(self, Horario, Placar, Local):
         self.Horario = Horario
