@@ -83,6 +83,7 @@ try:
                             print('[2] - Gerar Chave')
                             print('[3] - Exibir Chave')
                             print("[4] - Exibir Partida ")
+                            print("[5] - Boletim")
                             print('[0] - Sair')
 
                             opcao_chave = int(input('Escolha uma opção: '))
@@ -102,7 +103,7 @@ try:
                                 limpar_terminal()
                                 print('Exibindo Chave:')
                                 chave_interacao.ExibirChave()
-                                
+
                             elif opcao_chave == 4:
                                 limpar_terminal()
                                 if not chave_interacao.chaveamento:
@@ -113,6 +114,14 @@ try:
                                     limpar_terminal()
                                     print("======== Partida ========")
                                     partida_interacao.exibir_partida()
+                            elif opcao_chave == 5:
+                                limpar_terminal()
+                                if not "boletim" in locals():
+                                    boletim = Boletim("Horário a Definir", "Local a definir")
+                                boletim.ExibirBoletim()
+                                boletim.EditarBoletim()
+                                boletim.ExibirBoletim
+                                boletim.Criar_e_editar_boletim()
 
                             elif opcao_chave == 0:
                                 break

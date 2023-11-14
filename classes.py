@@ -219,36 +219,32 @@ class Partida:
 
 
 class Boletim:
-    def __init__(self, Horario, Placar, Local):
+    def __init__(self, Horario, Local):
         self.Horario = Horario
-        self.Placar = Placar
         self.Local = Local
     
     def ExibirBoletim(self):
         print("===BOLETIM===")
         print(f"Horario: {self.Horario}")
-        print(f"Placar: {self.Placar}")
         print(f"Local: {self.Local}")
-        print(5*"==")
+        print(6*"==")
 
 
     def EditarBoletim(self):
         print("====EDITAR BOLETIM====")
         print("1. Editar Horário")
-        print("2. Editar Placar")
-        print("3. Editar Local")
+        print("2. Editar Local")
         opcao = int(input("Escolha alguma opção?\nR: "))
         with sqlite3.connect("banco_de_dados.db") as banco:
             cursor = banco.cursor()
             if opcao == 1:
                 novo_horario = input("Novo horário: ")
+                self.Horario = novo_horario
                 cursor.execute("UPDATE Boletim SET Horario = ? WHERE Local = ?", (novo_horario, self.Local))
             elif opcao == 2:
-                novo_placar = input("Novo Placar: ")
-                cursor.execute("UPATE Boletim SET Placar = ? WHERE Local = ?", (novo_placar, self.Local))
-            elif opcao == 3:
                 novo_local = input("Novo Local: ")
-                cursor.execute("UPADETE Boletim SET Local = ? WHERE Local = ?", (novo_local, self.Local))
+                self.Local = novo_local
+                cursor.execute("UPDATE Boletim SET Local = ? WHERE Local = ?", (novo_local, self.Local))
             else:
                 print("Opção invalida.")
             banco.commit()
