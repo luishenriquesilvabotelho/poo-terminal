@@ -107,6 +107,7 @@ if login_ou_cadastro == 1:  # LOGIN
                         print('Opção inválida. Tente novamente.')
         else:
             quit()
+            
 
 elif login_ou_cadastro == 2:  # CADASTRO
     aluno_ou_prof = int(input('[1] - Aluno\n[2] - Professor'))
