@@ -150,8 +150,7 @@ class Professor(Usuario):
             print(f"Nenhuma aluno encontrado na turma {turma}")
         banco.close()
 
-def EditarInscricoes(self):
-        print("Editando inscrições")
+
 
 
 class Chave:
