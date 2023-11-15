@@ -60,6 +60,12 @@ class Aluno(Usuario):
     def Cadastrar(self):
         super().Cadastrar("Aluno", self.turma)
 
+    def ObterDisputasTurma(self):
+        with sqlite3.connect("banco_de_dados.db") as banco:
+            cursor = banco.cursor()
+            cursor.execute("SELECT * FROM Disputa WHERE turma1 = ? OR turma2 = ?", (self.turma, self.turma))
+            disputas_turma = cursor.fetchall()
+            return disputas_turma
 
 
 
@@ -190,7 +196,15 @@ class Chave:
         for i in range(0, len(self.turmas), times_por_disputa):
             disputa = tuple(self.turmas[i:i+times_por_disputa])
             self.chaveamento.append(disputa)
+            self.inserir_disputa_no_banco(disputa)  # Adicione esta linha
 
+    def inserir_disputa_no_banco(self, disputa):
+        with sqlite3.connect("banco_de_dados.db") as banco:
+            cursor = banco.cursor()
+            cursor.execute('''
+                INSERT INTO Disputa (turma1, turma2) VALUES (?, ?)
+            ''', disputa)
+            banco.commit()
     def ExibirChave(self):
         # Exibir o chaveamento
         for i, disputa in enumerate(self.chaveamento, start=1):

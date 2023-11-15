@@ -32,7 +32,7 @@ try:
                 while True:  # Adicione um loop para o menu do aluno
                     limpar_terminal()
                     print('========Menu do Aluno===========')
-                    print('[1] - Editar seus dados\n[2] - Esqueceu sua senha?\n[0] - Sair')
+                    print('[1] - Editar seus dados\n[0] - Sair')
                     menu_aluno_escolha = int(input('Escolha uma das opções acima: '))
 
                     if menu_aluno_escolha == 1:
@@ -43,8 +43,6 @@ try:
                             aluno_mudar.VerificarSenha()
                         except ValueError:
                             print("Por favor, insira um valor numérico para a matrícula.")
-                    elif menu_aluno_escolha == 2:
-                        pass
                     elif menu_aluno_escolha == 0:
                         quit()
                     else:
