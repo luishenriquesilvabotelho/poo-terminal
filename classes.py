@@ -209,16 +209,25 @@ class Chave:
         # Exibir o chaveamento
         for i, disputa in enumerate(self.chaveamento, start=1):
             print(f"Disputa {i}: {' x '.join(disputa)}")
+            
+
+
+
 class Partida:
     def __init__(self, chaveamento):
         self.chaveamento = chaveamento
         self.horario = {}
+
     def obter_horario_partida(self):
-        for i, disputa in enumerate(self.chaveamento, start= 1):
-            horario = input(f"Digite o horário da partida {i} entre {disputa[0]} x {disputa[1]} (por exemplo, 15:00)\nR: ")
-            self.horario[i] = horario
+        for i, disputa in enumerate(self.chaveamento, start=1):
+            try:
+                horario = input(f"Digite o horário da partida {i} entre {disputa[0]} x {disputa[1]} (por exemplo, 15:00)\nR: ")
+                self.horario[i] = horario
+            except Exception as e:
+                print(f"Erro ao obter horário: {e}")
+
     def exibir_partida(self):
-        for i, disputa in enumerate(self.chaveamento, start= 1):
+        for i, disputa in enumerate(self.chaveamento, start=1):
             turma1, turma2 = disputa
             print(f"Disputa {i}: {turma1} x {turma2}")
             if i in self.horario:
@@ -229,37 +238,40 @@ class Partida:
             for time in self.chaveamento:
                 print(f" - {time[0]} vs {time[1]}")
 
-      
-
-
 class Boletim:
     def __init__(self, Horario, Local):
         self.Horario = Horario
         self.Local = Local
-    
+
     def ExibirBoletim(self):
         print("===BOLETIM===")
         print(f"Horario: {self.Horario}")
         print(f"Local: {self.Local}")
-        print(6*"==")
-
+        print(6 * "==")
 
     def EditarBoletim(self):
         print("====EDITAR BOLETIM====")
         print("1. Editar Horário")
         print("2. Editar Local")
-        opcao = int(input("Escolha alguma opção?\nR: "))
-        with sqlite3.connect("banco_de_dados.db") as banco:
-            cursor = banco.cursor()
-            if opcao == 1:
-                novo_horario = input("Novo horário: ")
-                self.Horario = novo_horario
-                cursor.execute("UPDATE Boletim SET Horario = ? WHERE Local = ?", (novo_horario, self.Local))
-            elif opcao == 2:
-                novo_local = input("Novo Local: ")
-                self.Local = novo_local
-                cursor.execute("UPDATE Boletim SET Local = ? WHERE Local = ?", (novo_local, self.Local))
-            else:
-                print("Opção invalida.")
-            banco.commit()
-            print("Boletim editado com sucesso")
+        try:
+            opcao = int(input("Escolha alguma opção?\nR: "))
+            with sqlite3.connect("banco_de_dados.db") as banco:
+                cursor = banco.cursor()
+                if opcao == 1:
+                    novo_horario = input("Novo horário: ")
+                    self.Horario = novo_horario
+                    cursor.execute("UPDATE Boletim SET Horario = ? WHERE Local = ?", (novo_horario, self.Local))
+                elif opcao == 2:
+                    novo_local = input("Novo Local: ")
+                    self.Local = novo_local
+                    cursor.execute("UPDATE Boletim SET Local = ? WHERE Local = ?", (novo_local, self.Local))
+                else:
+                    print("Opção inválida.")
+                banco.commit()
+                print("Boletim editado com sucesso")
+        except ValueError as ve:
+            print(f"Erro de valor: {ve}")
+        except sqlite3.Error as se:
+            print(f"Erro no SQLite: {se}")
+        except Exception as e:
+            print(f"Ocorreu um erro: {e}")
