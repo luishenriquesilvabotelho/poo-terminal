@@ -1,6 +1,6 @@
 from funcoes import *
 from classes import *
-import os
+import time
 
 try:
     limpar_terminal()
@@ -32,7 +32,7 @@ try:
                 while True:  # Adicione um loop para o menu do aluno
                     limpar_terminal()
                     print('========Menu do Aluno===========')
-                    print('[1] - Editar seus dados\n[0] - Sair')
+                    print('[1] - Editar seus dados\n[2]- Ver Jogos[0] - Sair')
                     menu_aluno_escolha = int(input('Escolha uma das opções acima: '))
 
                     if menu_aluno_escolha == 1:
@@ -43,6 +43,55 @@ try:
                             aluno_mudar.VerificarSenha()
                         except ValueError:
                             print("Por favor, insira um valor numérico para a matrícula.")
+                    elif menu_aluno_escolha == 2:
+                        turmas = {
+                            1: '1 INFO A',
+                            2: '1 INFO B',
+                            3: '1 ELET A',
+                            4: '1 ELET B',
+                            5: '1 EDIF A',
+                            6: '1 EDIF B',
+                            7: '1 QUIM A',
+                            8: '1 QUIM B',
+                            9: '2 INFO M',
+                            10: '2 INFO V',
+                            11: '2 ELET M',
+                            12: '2 ELET V',
+                            13: '2 EDIF M',
+                            14: '2 EDIF V',
+                            15: '2 QUIM M',
+                            16: '2 QUIM V',
+                            17: '3 INFO M',
+                            18: '3 INFO V',
+                            19: '3 ELET M',
+                            20: '3 ELET V',
+                            21: '3 EDIF M',
+                            22: '3 EDIF V',
+                            23: '3 QUIM M',
+                            24: '3 QUIM V',
+                        }
+
+                        
+                        print("Turmas disponíveis:")
+                        for key, value in turmas.items():
+                            print(f"{key} - {value}")
+
+                        try:
+                            num_turma_aluno = int(input("Escolha o número da turma desejada: "))
+                            turma_aluno_ver = turmas[num_turma_aluno]
+                            aluno = Aluno(None, None, None, None, turma_aluno_ver)
+                            disputas_turma = aluno.ObterDisputasTurma()
+
+                            print("Disputas da Turma:")
+                            for disputa in disputas_turma:
+                                print(disputa)
+
+                            input("Aperte qualquer tecla")
+                        except KeyError:
+                            print("Número de turma inválido. Por favor, escolha um número válido.")
+                        except ValueError:
+                            print("Entrada inválida. Certifique-se de inserir um número inteiro.")
+
                     elif menu_aluno_escolha == 0:
                         quit()
                     else:
