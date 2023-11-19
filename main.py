@@ -105,7 +105,7 @@ try:
             usuario2 = Professor(None, None, input_mat_login_prof, input_senha_login_prof)
             if usuario2.Login(aluno_ou_prof):
                 limpar_terminal()
-                print('========Menu do Aluno===========')
+                print('========Menu do Prof===========')
                 print("[1]-Ver Alunos escritos\n[2] - Organizar Chave")
                 escolha_prof = int(input("Escolha uma das opções acima: "))
                 if escolha_prof == 1:
