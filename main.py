@@ -168,7 +168,6 @@ try:
                                 boletim.ExibirBoletim()
                                 boletim.EditarBoletim()
                                 boletim.ExibirBoletim
-                                boletim.Criar_e_editar_boletim()
 
                             elif opcao_chave == 0:
                                 break
