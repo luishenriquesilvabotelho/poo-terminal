@@ -1,6 +1,9 @@
 
 import sqlite3
 import random
+
+#Turma: 2 INFO V
+# Aluno: Luis Henrique, Marcos Aurelio, Daniel Guimarães E Danielly Vitória
 class Usuario:
     def __init__(self, nome, sexo, matricula, senha):
         self.nome = nome
@@ -56,57 +59,66 @@ class Aluno(Usuario):
     def __init__(self, nome, sexo, matricula, senha, turma):
         super().__init__(nome, sexo, matricula, senha)
         self.turma = turma
-        
+
     def Cadastrar(self):
-        super().Cadastrar("Aluno", self.turma)
+        try:
+            super().Cadastrar("Aluno", self.turma)
+        except Exception as e:
+            print(f"Ocorreu um erro no seu cadastro: {e}")
 
     def ObterDisputasTurma(self):
-        with sqlite3.connect("banco_de_dados.db") as banco:
-            cursor = banco.cursor()
-            cursor.execute("SELECT * FROM Disputa WHERE turma1 = ? OR turma2 = ?", (self.turma, self.turma))
-            disputas_turma = cursor.fetchall()
-            return disputas_turma
-
-
+        try:
+            with sqlite3.connect("banco_de_dados.db") as banco:
+                cursor = banco.cursor()
+                cursor.execute("SELECT * FROM Disputa WHERE turma1 = ? OR turma2 = ?", (self.turma, self.turma))
+                disputas_turma = cursor.fetchall()
+                return disputas_turma
+        except Exception as e:
+            print(f"Ocorreu um erro enquanto buscava as disputas de sua turma {e}")
+            return []
 
     def VerificarSenha(self):
-        with sqlite3.connect("banco_de_dados.db") as banco:
-            cursor = banco.cursor()
-            cursor.execute("SELECT * FROM Aluno WHERE matricula = ? AND senha = ?",
-                                        (self.matricula, self.senha))
-            verificador = cursor.fetchall()
-            if len(verificador) > 0:
-                print('MENU DE EDIÇÃO')
-                print('[1]-Nome\n[2]- Matricula\n[3]-Senha\n[4]-Sexo\n[5]-Turma\n')
-                escolha_editar = int(input(':'))
+        try:
+            with sqlite3.connect("banco_de_dados.db") as banco:
+                cursor = banco.cursor()
+                cursor.execute("SELECT * FROM Aluno WHERE matricula = ? AND senha = ?",
+                            (self.matricula, self.senha))
+                verificador = cursor.fetchall()
+                if len(verificador) > 0:
+                    print('MENU DE EDIÇÃO')
+                    print('[1]-Nome\n[2]- Matricula\n[3]-Senha\n[4]-Sexo\n[5]-Turma\n')
+                    escolha_editar = int(input(':'))
 
-                if escolha_editar == 1:
-                    novo_nome = input('Novo nome: ')
-                    cursor.execute("UPDATE Aluno SET nome = ? WHERE matricula = ?", (novo_nome, self.matricula))
+                    if escolha_editar == 1:
+                        novo_nome = input('Novo nome: ')
+                        cursor.execute("UPDATE Aluno SET nome = ? WHERE matricula = ?", (novo_nome, self.matricula))
 
-                elif escolha_editar == 2:
-                    nova_matricula = int(input('Nova matrícula: '))
-                    cursor.execute("UPDATE Aluno SET matricula = ? WHERE matricula = ?", (nova_matricula, self.matricula))
+                    elif escolha_editar == 2:
+                        nova_matricula = int(input('Nova matrícula: '))
+                        cursor.execute("UPDATE Aluno SET matricula = ? WHERE matricula = ?", (nova_matricula, self.matricula))
 
-                elif escolha_editar == 3:
-                    nova_senha = input('Nova senha: ')
-                    cursor.execute("UPDATE Aluno SET senha = ? WHERE matricula = ?", (nova_senha, self.matricula))
+                    elif escolha_editar == 3:
+                        nova_senha = input('Nova senha: ')
+                        cursor.execute("UPDATE Aluno SET senha = ? WHERE matricula = ?", (nova_senha, self.matricula))
 
-                elif escolha_editar == 4:
-                    novo_sexo = input('Novo sexo: ')
-                    cursor.execute("UPDATE Aluno SET sexo = ? WHERE matricula = ?", (novo_sexo, self.matricula))
+                    elif escolha_editar == 4:
+                        novo_sexo = input('Novo sexo: ')
+                        cursor.execute("UPDATE Aluno SET sexo = ? WHERE matricula = ?", (novo_sexo, self.matricula))
 
-                elif escolha_editar == 5:
-                    nova_turma = input('Nova turma: ')
-                    cursor.execute("UPDATE Aluno SET turma = ? WHERE matricula = ?", (nova_turma, self.matricula))
+                    elif escolha_editar == 5:
+                        nova_turma = input('Nova turma: ')
+                        cursor.execute("UPDATE Aluno SET turma = ? WHERE matricula = ?", (nova_turma, self.matricula))
 
-                banco.commit()
-                print('Dados atualizados com sucesso!')
-                return True
+                    banco.commit()
+                    print('Dados atualizados com sucesso!')
+                    return True
 
-            else:
-                print("Matrícula ou senha incorretas!")
-                return False
+                else:
+                    print("Matrícula ou senha incorretas!")
+                    return False
+        except Exception as e:
+            print(f"Ocorreu um erro na hora de verificar sua senha: {e}")
+            return False
 
 class Professor(Usuario):
     def __init__(self, nome, sexo, matricula, senha):
