@@ -188,28 +188,96 @@ class Chave:
                 print(f"  - {time}")
             print()
 
-    def GerarChave(self, times_por_disputa=2):
-        # Embaralhar aleatoriamente as turmas para criar o chaveamento
-        random.shuffle(self.turmas)
+    import sqlite3
+import random
 
-        # Criar as disputas com o número desejado de times por disputa
-        for i in range(0, len(self.turmas), times_por_disputa):
-            disputa = tuple(self.turmas[i:i+times_por_disputa])
-            self.chaveamento.append(disputa)
-            self.inserir_disputa_no_banco(disputa)  # Adicione esta linha
+class ChaveError(Exception):
+    pass
+
+class Chave:
+    def __init__(self, turmas):
+        self.turmas = turmas
+        self.chaveamento = []
+
+    def OrganizarTimes(self):
+        # Criar um dicionário para armazenar os times por turma
+        try:
+            times_por_turma = {}
+            for turma in self.turmas:
+                times_por_turma[turma] = []
+        # Consultar o banco de dados para obter os alunos por turma
+            with sqlite3.connect("banco_de_dados.db") as banco:
+                cursor = banco.cursor()
+                cursor.execute("SELECT nome, turma FROM Aluno")
+                alunos = cursor.fetchall()
+
+                for aluno in alunos:
+                    nome, turma = aluno
+                    times_por_turma[turma].append(nome)
+        # Exibir os times organizados por turma
+            for turma, times in times_por_turma.items():
+                print(f"Turma: {turma}")
+                for time in times:
+                    print(f"  - {time}")
+                print()
+        except sqlite3.Error as e:
+            raise ChaveError(f"Erro ao acessar o banco de dados: {e}")
+        except Exception as e:
+            raise ChaveError(f"Ocorreu um erro inesperado ao organizar times: {e}")
+
+    def GerarChave(self, times_por_disputa=2):
+        # Sortear aleatoriamente as turmas para criar o chaveamento
+        try:
+            if not self.turmas:
+                raise ChaveError("Não há turmas para gerar chaveamento.")
+            
+            # Limpar chaveamento para evitar duplicatas
+            self.LimparChaveamento()
+
+            random.shuffle(self.turmas)
+            # Criar as disputas com o número desejado de times por disputa
+            for i in range(0, len(self.turmas), times_por_disputa):
+                disputa = tuple(self.turmas[i:i+times_por_disputa])
+                self.chaveamento.append(disputa)
+                self.inserir_disputa_no_banco(disputa)
+        except IndexError as e:
+            raise ChaveError(f"Erro ao gerar chave: {e}")
+        except ChaveError as e:
+            raise e
+        except Exception as e:
+            raise ChaveError(f"Ocorreu um erro inesperado ao gerar chave: {e}")
+
+    def LimparChaveamento(self):
+        self.chaveamento = []
 
     def inserir_disputa_no_banco(self, disputa):
-        with sqlite3.connect("banco_de_dados.db") as banco:
-            cursor = banco.cursor()
-            cursor.execute('''
-                INSERT INTO Disputa (turma1, turma2) VALUES (?, ?)
-            ''', disputa)
-            banco.commit()
+        try:
+            with sqlite3.connect("banco_de_dados.db") as banco:
+                cursor = banco.cursor()
+                cursor.execute('''
+                    INSERT INTO Disputa (turma1, turma2) VALUES (?, ?)
+                ''', disputa)
+                banco.commit()
+        except sqlite3.Error as e:
+            raise ChaveError(f"Erro ao inserir disputa no banco de dados: {e}")
+        except Exception as e:
+            raise ChaveError(f"Ocorreu um erro inesperado ao inserir disputa no banco de dados: {e}")
+
     def ExibirChave(self):
-        # Exibir o chaveamento
-        for i, disputa in enumerate(self.chaveamento, start=1):
-            print(f"Disputa {i}: {' x '.join(disputa)}")
-            
+        try:
+            if not self.chaveamento:
+                print("Nenhum chaveamento disponível.")
+                return
+
+            for i, disputa in enumerate(self.chaveamento, start=1):
+                print(f"Disputa {i}: {' x '.join(disputa)}")
+                
+            self.LimparChaveamento
+        except ChaveError as e:
+            raise e
+        except Exception as e:
+            raise ChaveError(f"Ocorreu um erro inesperado ao exibir chave: {e}")
+
 
 
 
