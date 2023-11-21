@@ -168,41 +168,6 @@ class Professor(Usuario):
             print(f"Nenhuma aluno encontrado na turma {turma}")
         banco.close()
 
-
-
-
-
-class Chave:
-    def __init__(self, turmas):
-        self.turmas = turmas
-        self.chaveamento = []
-
-    def OrganizarTimes(self):
-        # Criar um dicionário para armazenar os times por turma
-        times_por_turma = {}
-        for turma in self.turmas:
-            times_por_turma[turma] = []
-
-        # Consultar o banco de dados para obter os alunos por turma
-        with sqlite3.connect("banco_de_dados.db") as banco:
-            cursor = banco.cursor()
-            cursor.execute("SELECT nome, turma FROM Aluno")
-            alunos = cursor.fetchall()
-
-            for aluno in alunos:
-                nome, turma = aluno
-                times_por_turma[turma].append(nome)
-
-        # Exibir os times organizados por turma
-        for turma, times in times_por_turma.items():
-            print(f"Turma: {turma}")
-            for time in times:
-                print(f"  - {time}")
-            print()
-
-    import sqlite3
-import random
-
 class ChaveError(Exception):
     pass
 
@@ -212,12 +177,11 @@ class Chave:
         self.chaveamento = []
 
     def OrganizarTimes(self):
-        # Criar um dicionário para armazenar os times por turma
         try:
             times_por_turma = {}
             for turma in self.turmas:
                 times_por_turma[turma] = []
-        # Consultar o banco de dados para obter os alunos por turma
+    
             with sqlite3.connect("banco_de_dados.db") as banco:
                 cursor = banco.cursor()
                 cursor.execute("SELECT nome, turma FROM Aluno")
@@ -226,7 +190,7 @@ class Chave:
                 for aluno in alunos:
                     nome, turma = aluno
                     times_por_turma[turma].append(nome)
-        # Exibir os times organizados por turma
+    
             for turma, times in times_por_turma.items():
                 print(f"Turma: {turma}")
                 for time in times:
@@ -238,16 +202,15 @@ class Chave:
             raise ChaveError(f"Ocorreu um erro inesperado ao organizar times: {e}")
 
     def GerarChave(self, times_por_disputa=2):
-        # Sortear aleatoriamente as turmas para criar o chaveamento
+        
         try:
             if not self.turmas:
                 raise ChaveError("Não há turmas para gerar chaveamento.")
             
-            # Limpar chaveamento para evitar duplicatas
             self.LimparChaveamento()
 
             random.shuffle(self.turmas)
-            # Criar as disputas com o número desejado de times por disputa
+            
             for i in range(0, len(self.turmas), times_por_disputa):
                 disputa = tuple(self.turmas[i:i+times_por_disputa])
                 self.chaveamento.append(disputa)
