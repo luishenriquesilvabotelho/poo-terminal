@@ -2,6 +2,10 @@ from funcoes import *
 from classes import *
 import time
 
+
+#Turma: 2 INFO V
+# Aluno: Luis Henrique, Marcos Aurelio, Daniel Guimarães E Danielly Vitória
+
 try:
     limpar_terminal()
     print('Seja bem-vindo ao nosso sistema\nEscolha uma das opções abaixo')
